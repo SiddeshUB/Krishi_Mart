@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Cart - KrishiMart</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        padding: 30px;
+        background-color: #f0f8f0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2e7d32;
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 95%;
+        margin: 0 auto 30px;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #e0e0e0;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    th {
+        background-color: #dcedc8;
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .remove-btn, .checkout-btn, .clearcart-btn {
+        background-color: #43a047;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .remove-btn {
+        background-color: #e53935;
+    }
+
+    .remove-btn:hover {
+        background-color: #c62828;
+    }
+
+    .checkout-btn:hover,
+    .clearcart-btn:hover {
+        background-color: #388e3c;
+    }
+
+    .checkout {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .checkout h2 {
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+
+    .checkout form {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    .clearcart {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .clearcart-btn {
+        background-color: #f57c00;
+        margin-top: 10px;
+    }
+
+    .clearcart-btn:hover {
+        background-color: #ef6c00;
+    }
+
+    button {
+        outline: none;
+    }
+</style>
+
+</head>
+<body>
+    <h1>My Cart</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+                <th>Total (₹)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.product.productName}"></td>
+                <td th:text="${item.product.description}"></td>
+                <td th:text="${item.product.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.quantity * item.product.price}"></td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+					    <input type="hidden" name="cartItemId" th:value="${item.id}" />
+					    <input type="hidden" name="userId" th:value="${userId}" />
+					    <button type="submit" class="remove-btn">Remove</button>
+					</form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<div class="checkout">
+    <h2>Total: ₹<span th:text="${totalAmount}"></span></h2>
+
+    <!-- Checkout button -->
+    <form th:action="@{/cart/checkout}" method="post" style="display:inline;">
+        <input type="hidden" name="userId" th:value="${userId}" />
+        <button type="submit" class="checkout-btn">Checkout</button>
+    </form>
+
+    <!-- Place Order button -->
+    <form th:action="@{/order/place}" method="post" style="display:inline; margin-left: 10px;">
+        <input type="hidden" name="userId" th:value="${userId}" />
+        <button type="submit" class="checkout-btn">Place Order</button>
+    </form>
+</div>
+
+    <div class="clearcart">
+        <form th:action="@{/cart/clear}" method="post">
+		    <input type="hidden" name="userId" th:value="${userId}" />
+		  <button type="submit" class="clearcart-btn">Clear Cart</button>
+		</form>
+    </div>
+</body>
+</html>

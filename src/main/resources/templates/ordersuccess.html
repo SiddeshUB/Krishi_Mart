@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Success - KrishiMart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f0fff0;
+        }
+
+        h1 {
+            color: #2e7d32;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        a {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #27642b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Placed Successfully!</h1>
+    <p>Thank you for shopping with KrishiMart.</p>
+    <a th:href="@{/products/view}">Continue Shopping</a>
+</body>
+</html>
